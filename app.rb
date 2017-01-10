@@ -59,15 +59,15 @@ namespace '/api/v1/user' do
     if password != password_repeat
       halt 400, { message: "Passwords do not match." }.to_json
     end
-    if Users.count(:conditions => ['username = ?', username]) != 0
+    if User.count(:conditions => ['username = ?', username]) != 0
       halt 400, { message: "User with given username already exists." }.to_json
     end
 
-    if Users.count(:conditions => ['email = ?', email]) != 0
+    if User.count(:conditions => ['email = ?', email]) != 0
       halt 400, { message: "User with given email id already exists" }.to_json
     end 
 
-    user = Users.create(:username => username, :email => email, :password => password, :first_name => first_name, :last_name => last_name)
+    user = User.create(:username => username, :email => email, :password => password, :first_name => first_name, :last_name => last_name)
     if !user.saved?
       halt 400, { message: "Failed to register user." }.to_json
     end
