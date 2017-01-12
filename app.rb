@@ -22,8 +22,7 @@ class User
   property :created_at,    	DateTime
 end
 
-DataMapper.finalize
-DataMapper.auto_migrate!
+DataMapper.auto_upgrade!
 
 helpers do
   def valid_email? (email)
