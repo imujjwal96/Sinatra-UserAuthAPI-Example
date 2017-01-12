@@ -74,4 +74,27 @@ namespace '/api/v1/user' do
     halt 200, { message: "User registered successfully." }.to_json
   end
 
+  post '/login' do
+    username = params[:username].nil? ? '' : params[:username]
+    password = params[:password].nil? ? '' : params[:password]
+
+    if username.empty?
+      halt 400, { message: "Empty username." }.to_json
+    end
+    
+    if password.empty?
+      halt 400, { message: "Empty password." }.to_json
+    end
+
+    user = User.first(:username => username)
+    if user.nil?
+      halt 400, { message: "User does not exist." }.to_json
+    end
+
+    if user.password != password
+      halt 400, { message: "Incorrect password." }.to_json
+    end
+
+    halt 200, { message: "Login successful." }.to_json
+  end
 end
